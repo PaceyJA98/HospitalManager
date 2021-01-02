@@ -5,12 +5,19 @@
  */
 package hospital;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import java.awt.print.PrinterException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author amosp
  */
 public class Hospital extends javax.swing.JFrame {
-
+private JFrame frame;
     /**
      * Creates new form Hospital
      */
@@ -31,7 +38,7 @@ public class Hospital extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jtxtPrescription = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -46,7 +53,7 @@ public class Hospital extends javax.swing.JFrame {
         btnPrint = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cmbxnotablets = new javax.swing.JComboBox<>();
+        cmbxnametablets = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -64,7 +71,7 @@ public class Hospital extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         txtfDose = new javax.swing.JTextField();
-        txtfrefno = new javax.swing.JTextField();
+        txtRefNo = new javax.swing.JTextField();
         txtfLOT = new javax.swing.JTextField();
         txtfIssueDate = new javax.swing.JTextField();
         txtfExpDate = new javax.swing.JTextField();
@@ -81,6 +88,8 @@ public class Hospital extends javax.swing.JFrame {
         txtfDateOfBirth = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        txtfNumberTablets = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 650));
@@ -101,9 +110,9 @@ public class Hospital extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jtxtPrescription.setColumns(20);
+        jtxtPrescription.setRows(5);
+        jScrollPane1.setViewportView(jtxtPrescription);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 430));
 
@@ -177,6 +186,11 @@ public class Hospital extends javax.swing.JFrame {
         jPanel4.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 10, 130, 30));
 
         btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnPrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 120, 30));
 
         btnLogin.setText("Login");
@@ -193,9 +207,14 @@ public class Hospital extends javax.swing.JFrame {
         jLabel3.setText("Reference No.");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
-        cmbxnotablets.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        cmbxnotablets.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Make a Selection", "Ibuprofen", "Co-codamol", "Paracetamol", "Amlodipine" }));
-        getContentPane().add(cmbxnotablets, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 140, 220, 30));
+        cmbxnametablets.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cmbxnametablets.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Make a Selection", "Ibuprofen", "Co-codamol", "Paracetamol", "Amlodipine" }));
+        cmbxnametablets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxnametabletsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbxnametablets, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 140, 220, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel4.setText("Name of Tablets");
@@ -203,7 +222,7 @@ public class Hospital extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel5.setText("LOT:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel6.setText("Dose (mg):");
@@ -211,19 +230,19 @@ public class Hospital extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel7.setText("Possible Side Effects:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel8.setText("Daily Dose:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel9.setText("Exp Date:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel10.setText("Issued Date:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel11.setText("Patient ID:");
@@ -265,13 +284,13 @@ public class Hospital extends javax.swing.JFrame {
         txtfDose.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(txtfDose, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 200, -1));
 
-        txtfrefno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtfrefno.addActionListener(new java.awt.event.ActionListener() {
+        txtRefNo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtRefNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfrefnoActionPerformed(evt);
+                txtRefNoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtfrefno, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 200, -1));
+        getContentPane().add(txtRefNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 200, -1));
 
         txtfLOT.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtfLOT.addActionListener(new java.awt.event.ActionListener() {
@@ -279,10 +298,10 @@ public class Hospital extends javax.swing.JFrame {
                 txtfLOTActionPerformed(evt);
             }
         });
-        getContentPane().add(txtfLOT, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 200, -1));
+        getContentPane().add(txtfLOT, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 200, -1));
 
         txtfIssueDate.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(txtfIssueDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 200, -1));
+        getContentPane().add(txtfIssueDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 200, -1));
 
         txtfExpDate.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtfExpDate.addActionListener(new java.awt.event.ActionListener() {
@@ -290,13 +309,13 @@ public class Hospital extends javax.swing.JFrame {
                 txtfExpDateActionPerformed(evt);
             }
         });
-        getContentPane().add(txtfExpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 200, -1));
+        getContentPane().add(txtfExpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 200, -1));
 
         txtfSideEffects.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(txtfSideEffects, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 200, -1));
+        getContentPane().add(txtfSideEffects, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 200, -1));
 
         txtfDailyDose.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(txtfDailyDose, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 200, -1));
+        getContentPane().add(txtfDailyDose, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 200, -1));
 
         txtfInfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtfInfo.addActionListener(new java.awt.event.ActionListener() {
@@ -357,12 +376,24 @@ public class Hospital extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 590, 1160, 140));
 
+        txtfNumberTablets.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtfNumberTablets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfNumberTabletsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtfNumberTablets, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 200, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel19.setText("Number of Tablets");
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtfrefnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfrefnoActionPerformed
+    private void txtRefNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRefNoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtfrefnoActionPerformed
+    }//GEN-LAST:event_txtRefNoActionPerformed
 
     private void txtfLOTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfLOTActionPerformed
         // TODO add your handling code here:
@@ -397,7 +428,56 @@ public class Hospital extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGPActionPerformed
 
     private void btnPrescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrescriptionActionPerformed
-        // TODO add your handling code here:
+        String Qty1 = (txtRefNo.getText());
+        String Qty2 = (txtfDose.getText());
+        String Qty3 = (txtfNumberTablets.getText());
+        String Qty4 = (txtfLOT.getText());
+        String Qty5 = (txtfDailyDose.getText());
+        String Qty6 = (txtfSideEffects.getText());
+        String Qty7 = (txtfInfo.getText());
+        String Qty8 = (txtfHowTo.getText());
+        String Qty9 = (txtfPatientID.getText());
+        String Qty10 = (txtfPatientName.getText());
+        String Qty11 = (txtfDateOfBirth.getText());
+        String Qty12 = (txtfPatientAddress.getText());
+        String Qty13 = "";
+        
+        if(cmbxnametablets.getSelectedItem().equals("Ibuprofen"))
+        {
+            Qty13 = "Ibuprofen";
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Co-codamol"))
+        {
+            Qty13 = "Co-codamol";
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Amlodipine"))
+        {
+            Qty13 = "Amlodipine";
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Paracetamol"))
+        {
+            Qty13 = "Paracetamol";
+        }
+        
+        jtxtPrescription.setText("");
+        jtxtPrescription.append("\t\n\tHospital Management System\n"
+        +"\nPatient Name:\t\t" + Qty10
+        +"\nDate Of Birth:\t\t" + Qty11
+        +"\nPatient Address :\t" + Qty12
+        +"\nPrescription:\t\t" + Qty13
+        +"\n\nReference No:\t\t" + Qty1
+        +"\nDose (mg):\t\t" + Qty2
+        +"\nNumber of Tablets:\t" + Qty3
+        +"\nLOT:\t\t" + Qty4
+        +"\nDaily Dose :\t\t" + Qty5
+        +"\nPossible Side Effects:\t" + Qty6
+        +"\nFurther Information\t" + Qty7
+        +"\nHow to Use Medication\t" + Qty8
+        +"\nPatient ID:\t\t" + Qty9
+        +"\n\n\tPatient Instruction we have introduced a \n\t free text configuration\n\t"
+                + "TEXT REMINDERS FOR APPOINTMENT");
+        
+        
     }//GEN-LAST:event_btnPrescriptionActionPerformed
 
     private void btnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientActionPerformed
@@ -405,12 +485,119 @@ public class Hospital extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPatientActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
+        frame = new JFrame();
+        if (JOptionPane.showConfirmDialog(frame,"Do you want to exit?", "Hospital Manager System",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
+                        System.exit(0);
+        }
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        try{
+            //named text area jtxtPrescription, Is this correct???
+            jtxtPrescription.print();
+            
+        }catch (PrinterException ex){
+            Logger.getLogger(Hospital.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }//GEN-LAST:event_btnPrintActionPerformed
+
+    private void cmbxnametabletsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxnametabletsActionPerformed
+        if(cmbxnametablets.getSelectedItem().equals("Ibuprofen"))
+        {
+            txtRefNo.setText("Ibu8568959");
+            txtfDose.setText("2");
+            txtfNumberTablets.setText("32");
+            txtfLOT.setText("561005875");
+            txtfIssueDate.setText("06/05/2018");
+            txtfExpDate.setText("04/05/2019");
+            txtfDailyDose.setText("4");
+            
+            txtfSideEffects.setText("Bleeding");
+            txtfInfo.setText("Place Dispensary");
+            txtfStorage.setText("Less than 20%");
+            txtfMachines.setText("No");
+            txtfHowTo.setText("Use water, No Alcohol");
+            txtfPatientID.setText("P9589454");
+            txtfNHS.setText("646564");
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Co-codamol")){
+            txtRefNo.setText("COCO6758940");
+            txtfDose.setText("500");
+            txtfNumberTablets.setText("30");
+            txtfLOT.setText("B770034");
+            txtfIssueDate.setText("06/05/2018");
+            txtfExpDate.setText("04/12/2019");
+            txtfDailyDose.setText("2");
+            
+            txtfSideEffects.setText("Dizziness");
+            txtfInfo.setText("Place Dispensary");
+            txtfStorage.setText("Less than 20%");
+            txtfMachines.setText("No");
+            txtfHowTo.setText("Use water, No Alcohol");
+            txtfPatientID.setText("P9589454");
+            txtfNHS.setText("646564");
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Paracetamol")){
+            txtRefNo.setText("01729214");
+            txtfDose.setText("500");
+            txtfNumberTablets.setText("16");
+            txtfLOT.setText("0204324");
+            txtfIssueDate.setText("07/05/2018");
+            txtfExpDate.setText("04/05/2019");
+            txtfDailyDose.setText("2");
+            
+            txtfSideEffects.setText("Nausea");
+            txtfInfo.setText("Place Dispensary");
+            txtfStorage.setText("Less than 25%");
+            txtfMachines.setText("No");
+            txtfHowTo.setText("Use water, No Alcohol");
+            txtfPatientID.setText("P5562454");
+            txtfNHS.setText("875564");
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Amlodipine")){
+            txtRefNo.setText("Am05875");
+            txtfDose.setText("5");
+            txtfNumberTablets.setText("28");
+            txtfLOT.setText("8745475");
+            txtfIssueDate.setText("06/05/2018");
+            txtfExpDate.setText("04/05/2019");
+            txtfDailyDose.setText("1");
+            
+            txtfSideEffects.setText("Liver Disease");
+            txtfInfo.setText("Ability to drive may be affected");
+            txtfStorage.setText("No Special Storage");
+            txtfMachines.setText("No");
+            txtfHowTo.setText("Use water, No Alcohol");
+            txtfPatientID.setText("P9129454");
+            txtfNHS.setText("6346564");
+        }
+        else if(cmbxnametablets.getSelectedItem().equals("Make a Selection")){
+            txtRefNo.setText("");
+            txtfDose.setText("");
+            txtfNumberTablets.setText("");
+            txtfLOT.setText("");
+            txtfIssueDate.setText("");
+            txtfExpDate.setText("");
+            txtfDailyDose.setText("");
+            
+            txtfSideEffects.setText("");
+            txtfInfo.setText("");
+            txtfStorage.setText("");
+            txtfMachines.setText("");
+            txtfHowTo.setText("");
+            txtfPatientID.setText("");
+            txtfNHS.setText("");
+        }
+    }//GEN-LAST:event_cmbxnametabletsActionPerformed
+
+    private void txtfNumberTabletsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfNumberTabletsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfNumberTabletsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -458,7 +645,7 @@ public class Hospital extends javax.swing.JFrame {
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbxnotablets;
+    private javax.swing.JComboBox<String> cmbxnametablets;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -469,6 +656,7 @@ public class Hospital extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
@@ -485,7 +673,8 @@ public class Hospital extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jtxtPrescription;
+    private javax.swing.JTextField txtRefNo;
     private javax.swing.JTextField txtfDailyDose;
     private javax.swing.JTextField txtfDateOfBirth;
     private javax.swing.JTextField txtfDose;
@@ -496,11 +685,11 @@ public class Hospital extends javax.swing.JFrame {
     private javax.swing.JTextField txtfLOT;
     private javax.swing.JTextField txtfMachines;
     private javax.swing.JTextField txtfNHS;
+    private javax.swing.JTextField txtfNumberTablets;
     private javax.swing.JTextField txtfPatientAddress;
     private javax.swing.JTextField txtfPatientID;
     private javax.swing.JTextField txtfPatientName;
     private javax.swing.JTextField txtfSideEffects;
     private javax.swing.JTextField txtfStorage;
-    private javax.swing.JTextField txtfrefno;
     // End of variables declaration//GEN-END:variables
 }
