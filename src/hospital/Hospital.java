@@ -5,6 +5,7 @@
  */
 package hospital;
 
+import Login.Login;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -174,6 +175,11 @@ private JFrame frame;
         jPanel4.add(btnPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 100, 30));
 
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 90, 30));
 
         btnExit.setText("Exit");
@@ -493,7 +499,9 @@ private JFrame frame;
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        Login iLogin = new Login();
+        iLogin.setVisible(true);
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -577,6 +585,7 @@ private JFrame frame;
             txtfNHS.setText("6346564");
         }
         else if(cmbxnametablets.getSelectedItem().equals("Make a Selection")){
+            cmbxnametablets.setSelectedItem("Make a Selection");
             txtRefNo.setText("");
             txtfDose.setText("");
             txtfNumberTablets.setText("");
@@ -592,12 +601,37 @@ private JFrame frame;
             txtfHowTo.setText("");
             txtfPatientID.setText("");
             txtfNHS.setText("");
+            txtfPatientName.setText("");
+            txtfDateOfBirth.setText("");
+            txtfPatientAddress.setText("");
         }
     }//GEN-LAST:event_cmbxnametabletsActionPerformed
 
     private void txtfNumberTabletsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfNumberTabletsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtfNumberTabletsActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        cmbxnametablets.setSelectedItem("Make a Selection");
+        txtRefNo.setText("");
+        txtfDose.setText("");
+        txtfNumberTablets.setText("");
+        txtfLOT.setText("");
+        txtfIssueDate.setText("");
+        txtfExpDate.setText("");
+        txtfDailyDose.setText("");
+            
+        txtfSideEffects.setText("");
+        txtfInfo.setText("");
+        txtfStorage.setText("");
+        txtfMachines.setText("");
+        txtfHowTo.setText("");
+        txtfPatientID.setText("");
+        txtfNHS.setText("");
+        txtfPatientName.setText("");
+        txtfDateOfBirth.setText("");
+        txtfPatientAddress.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
