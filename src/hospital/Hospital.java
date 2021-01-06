@@ -8,6 +8,7 @@ package hospital;
 import Login.Login;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.print.PrinterException;
 import java.util.logging.Level;
@@ -144,9 +145,19 @@ private JFrame frame;
         jPanel4.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 100, 30));
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
 
         btnDoctor.setText("Doctor");
+        btnDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoctorActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnDoctor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 100, 30));
 
         btnGP.setText("GP Appointment");
@@ -426,11 +437,22 @@ private JFrame frame;
     }//GEN-LAST:event_txtfDateOfBirthActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRow() == -1){
+            if (jTable1.getRowCount() == 0){
+                JOptionPane.showMessageDialog(null, "No data to delete", "Hospital Management Systems",
+                        JOptionPane.OK_OPTION );
+            }else{
+                JOptionPane.showMessageDialog(null, "Select a row to delete", "Hospital Management Systems",
+                        JOptionPane.OK_OPTION );                
+            }
+        }else{
+            model.removeRow(jTable1.getSelectedRow());
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnGPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGPActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnGPActionPerformed
 
     private void btnPrescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrescriptionActionPerformed
@@ -487,7 +509,7 @@ private JFrame frame;
     }//GEN-LAST:event_btnPrescriptionActionPerformed
 
     private void btnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnPatientActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -632,6 +654,22 @@ private JFrame frame;
         txtfDateOfBirth.setText("");
         txtfPatientAddress.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{cmbxnametablets.getSelectedItem().toString(),
+            txtRefNo.getText(),txtfDose.getText(),txtfNumberTablets.getText(),txtfLOT.getText(),
+            txtfIssueDate.getText(),txtfExpDate.getText(),txtfDailyDose.getText(),
+            txtfSideEffects.getText(),txtfInfo.getText(),txtfStorage.getText(),
+            txtfMachines.getText(),txtfHowTo.getText(),txtfPatientID.getText(),txtfNHS.getText(),
+            txtfPatientName.getText(),txtfDateOfBirth.getText(),txtfPatientAddress.getText(),
+        });
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
+
+    }//GEN-LAST:event_btnDoctorActionPerformed
 
     /**
      * @param args the command line arguments

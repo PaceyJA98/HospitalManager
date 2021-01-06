@@ -7,6 +7,7 @@ package Login;
 
 import hospital.Hospital;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -98,6 +99,11 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 240, 40));
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, -1, -1));
 
         btnLogin.setText("Login");
@@ -109,6 +115,11 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 560, 270));
@@ -142,6 +153,20 @@ public class Login extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        frame = new JFrame();
+        if (JOptionPane.showConfirmDialog(frame,"Do you want to exit?", "Hospital Manager System",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
+            System.exit(0);
+        }
+        
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        txtusername.setText("");
+        passwordField.setText("");
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
